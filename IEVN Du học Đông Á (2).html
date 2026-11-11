@@ -1,0 +1,618 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>IEVN Du học Đông Á</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lexend:wght@500;600;700&display=swap">
+<style>
+/* Layout: sảnh so sánh ở trang chủ, mỗi khu vực là một mini site 4 mục (Chương trình, Trường & Ngành, Học bổng & Chi phí, Cuộc sống). Điều hướng bằng hash. */
+:root{
+  --navy:#0E1B4D;
+  --navy-2:#16296B;
+  --blue:#2E86D1;
+  --sky:#5BB8E8;
+  --gold:#F2B635;
+  --on-gold:#1B1500;
+  --bg:#FFFFFF;
+  --surface:#FFFFFF;
+  --surface-2:#F0F6FD;
+  --fg:#0E1B3A;
+  --muted:#4F5D7C;
+  --line:#DDE6F2;
+  --accent:#1F6FB8;
+  --hero-fg:#0E1B4D;
+  --hero-muted:#46557C;
+  --hero-bg:radial-gradient(1000px 420px at 88% -10%,rgba(91,184,232,.22),transparent 60%),linear-gradient(160deg,#FFFFFF 0%,#EAF4FD 100%);
+  --hero-card:rgba(255,255,255,.95);
+  --hero-card-line:#C6D9EE;
+  --hero-card-hover:#FFFFFF;
+  --hero-ghost:rgba(14,27,77,.45);
+  --hz-ghost:rgba(14,27,77,.06);
+  --head-bg:#FFFFFF;
+  --head-fg:#0E1B4D;
+  --head-hover:rgba(14,27,77,.07);
+  --head-on:rgba(46,134,209,.15);
+  --foot-bg:#0E1B4D;
+  --foot-fg:#C9D6F2;
+  --foot-h:#FFFFFF;
+  --result-bg:#EAF4FD;
+  --c-dl:#1B8FD0;
+  --c-tq:#D2453B;
+  --c-hk:#7B4FC9;
+  --c-mc:#1F9D7A;
+  --font-body:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-display:'Lexend','Be Vietnam Pro',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  color-scheme:light;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));
+}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.2;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.hero .eyebrow{color:var(--accent)}
+
+/* header */
+.site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--head-bg);color:var(--head-fg);border-bottom:3px solid var(--gold);box-shadow:0 2px 10px rgba(14,27,77,.08)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--head-bg)}
+.head-in{display:flex;align-items:center;gap:16px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--head-fg);flex:none}
+.brand img{height:50px;width:auto;display:block}
+.brand b{font-family:var(--font-display);font-size:20px;letter-spacing:.04em}
+.nav{display:flex;align-items:center;gap:2px;margin-left:auto;flex-wrap:wrap}
+.nav a{color:var(--head-fg);text-decoration:none;font-size:14px;font-weight:500;padding:8px 10px;border-radius:8px;white-space:nowrap}
+.nav a:hover{background:var(--head-hover)}
+.nav a.on{background:var(--head-on);color:var(--head-fg);font-weight:700}
+.nav a.cta{background:var(--gold);color:var(--on-gold);font-weight:700;margin-left:6px}
+.nav a.cta:hover{filter:brightness(1.05)}
+.menu-btn{display:none;margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--head-fg);border-radius:8px;padding:8px 12px;font:600 14px var(--font-body);cursor:pointer}
+@media (max-width:1020px){
+  .menu-btn{display:block}
+  .nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--head-bg);flex-direction:column;align-items:stretch;padding:8px max(16px,env(safe-area-inset-left,0px)) 16px;border-bottom:3px solid var(--gold)}
+  .nav.open{display:flex}
+  .nav a{padding:12px 10px;font-size:15px}
+  .nav a.cta{margin:6px 0 0;text-align:center}
+}
+
+/* hero */
+.hero{background:var(--hero-bg);color:var(--hero-fg);position:relative;overflow:hidden}
+.hero-in{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;padding-block:48px 56px;align-items:center}
+.hero h1{font-size:clamp(28px,4.4vw,46px);font-weight:700}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--gold) 62%);padding:0 2px}
+.hero p.lead{color:var(--hero-muted);font-size:17px;max-width:54ch;margin-top:14px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font:600 15px var(--font-body);padding:12px 20px;border-radius:10px;min-height:46px}
+.btn.gold{background:var(--gold);color:var(--on-gold)}
+.btn.gold:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:var(--hero-fg);border:1.5px solid var(--hero-ghost)}
+.btn.ghost:hover{background:var(--head-hover)}
+.btn.line{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn.line:hover{background:var(--surface-2)}
+.picker{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pick{display:flex;flex-direction:column;justify-content:space-between;min-height:128px;padding:14px;border-radius:14px;text-decoration:none;color:var(--hero-fg);background:var(--hero-card);border:1px solid var(--hero-card-line);position:relative;overflow:hidden;transition:transform .15s,background .15s}
+.pick:hover{background:var(--hero-card-hover);transform:translateY(-2px)}
+.pick .hz{font-size:44px;line-height:1;font-weight:700;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+.pick b{font-family:var(--font-display);font-size:16px}
+.pick small{display:block;color:var(--hero-muted);font-size:12px}
+.pick i{position:absolute;top:0;left:0;width:100%;height:4px}
+.pick.maybe{grid-column:1/-1;min-height:0;flex-direction:row;align-items:center;background:var(--gold);color:var(--on-gold);border:0}
+.pick.maybe small{color:#4A3A00}
+@media (max-width:860px){.hero-in{grid-template-columns:1fr;padding-block:32px 40px}}
+
+/* sections */
+section.blk{padding-block:56px}
+section.blk.alt{background:var(--surface-2)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px;margin-bottom:24px}
+.sec-head h2{font-size:clamp(22px,3vw,30px);margin-top:6px}
+.sec-head p{color:var(--muted);max-width:60ch;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:600 14px var(--font-body);padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;min-height:40px}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:#1F6FB8;color:#fff;border-color:#1F6FB8}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;color:#fff;letter-spacing:.02em}
+.tag.dl{background:var(--c-dl)}.tag.tq{background:var(--c-tq)}.tag.hk{background:var(--c-hk)}.tag.mc{background:var(--c-mc)}.tag.gen{background:var(--muted)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:980px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.g4,.g3,.g2{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{font-size:17px}
+.card p{color:var(--muted);font-size:15px}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.pill{font-size:12px;font-weight:600;background:var(--surface-2);color:var(--fg);border-radius:6px;padding:3px 8px}
+a.card{text-decoration:none;color:inherit}
+a.card:hover{border-color:var(--accent)}
+.sub-h{font-family:var(--font-display);font-size:clamp(20px,2.4vw,24px);font-weight:700;line-height:1.25;color:var(--navy);letter-spacing:-.01em;margin:40px 0 18px;padding:2px 0 2px 14px;border-left:6px solid var(--gold)}
+.sub-h:first-child{margin-top:0}
+.tbd{border:1.5px dashed var(--line);border-radius:14px;padding:18px;color:var(--muted);font-size:14px;background:transparent}
+
+/* navy bands: tách các khối nội dung */
+.band-navy{background:var(--navy);color:#fff;--fg:#FFFFFF;--muted:#BCCAE8;--surface:rgba(255,255,255,.08);--surface-2:rgba(255,255,255,.16);--line:rgba(255,255,255,.2);--accent:#7CCBF2}
+.band-navy .result{background:#fff;color:#0E1B3A;--fg:#0E1B3A;--muted:#4F5D7C;--accent:#1F6FB8;--surface-2:#EAF4FD;border:0}
+.band-navy .sub-h{color:#fff;border-left-color:var(--gold)}
+.card.navy{background:var(--navy);border-color:var(--navy);color:#fff}
+.card.navy p{color:#fff}
+/* region highlights */
+.reg-sec{padding-top:32px;margin-top:32px;border-top:1px solid var(--line)}
+.reg-sec:first-child{padding-top:0;margin-top:0;border-top:0}
+.reg-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin-bottom:18px}
+.reg-name{display:flex;align-items:baseline;gap:12px}
+.reg-name b{font-family:var(--font-display);font-size:clamp(20px,2.6vw,26px);color:var(--navy)}
+.hzs{font-size:30px;font-weight:700;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+.hl{margin:0;padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:4px}
+.card a.more,.card .more{font-weight:600;font-size:14px;margin-top:auto;padding-top:8px;color:var(--accent);text-decoration:none}
+.card a.more:hover{text-decoration:underline}
+.side .box.compare{background:#FFF4D1;border:2px solid var(--gold);box-shadow:0 4px 14px rgba(242,182,53,.28)}
+.side .box.compare h4{font-size:17px;color:var(--navy)}
+.side .box.compare p{font-size:14px;color:#4A3A00;margin-bottom:12px}
+.cmp-banner{display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#FFF4D1;border:2px solid var(--gold);border-radius:12px;padding:12px 14px;margin-bottom:20px;text-decoration:none;color:var(--navy)}
+.cmp-banner span{font-weight:700;color:#8A5A00}
+@media (max-width:900px){.cmp-banner{display:flex}}
+/* compare table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:15px}
+th,td{padding:14px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+thead th{font-family:var(--font-display);font-size:15px;background:var(--surface-2);position:relative}
+thead th .hz{font-size:12px;color:var(--muted);font-weight:500;display:block}
+tbody th{font-weight:600;color:var(--muted);font-size:14px;width:170px}
+.dots{display:inline-flex;gap:4px;vertical-align:middle;margin-right:8px}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+.dots i.f{background:var(--gold)}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+
+/* quiz */
+.quiz{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start}
+@media (max-width:860px){.quiz{grid-template-columns:1fr}}
+.q{border:0;padding:0;margin:0 0 18px}
+.q legend{font-weight:700;margin-bottom:8px;font-family:var(--font-display);font-size:16px;padding:0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts label{padding:9px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;font-size:15px;min-height:42px;display:inline-flex;align-items:center}
+.opts input:checked+label{border-color:var(--accent);background:var(--surface-2);font-weight:600}
+.opts input:focus-visible+label{outline:3px solid var(--gold);outline-offset:2px}
+.result{background:var(--result-bg);color:var(--fg);border:1px solid var(--hero-card-line);border-radius:16px;padding:22px;min-height:180px}
+.result h3{font-size:20px;margin-top:6px}
+.result p{color:var(--muted);margin-top:8px;font-size:15px}
+
+/* steps / trust */
+.steps{counter-reset:s;display:grid;gap:12px}
+.step{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.step::before{counter-increment:s;content:counter(s);width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--on-gold);font-weight:700;display:grid;place-items:center;font-family:var(--font-display)}
+.step b{display:block}
+.step span{color:var(--muted);font-size:15px}
+
+/* region page */
+.r-hero{background:var(--hero-bg);color:var(--hero-fg);position:relative;overflow:hidden;border-bottom:3px solid var(--rc,var(--sky))}
+.r-hero .hzbig{position:absolute;right:max(16px,3vw);bottom:-24px;font-size:clamp(120px,22vw,240px);font-weight:700;line-height:1;color:var(--hz-ghost);font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;pointer-events:none}
+.r-hero-in{padding-block:36px 28px;position:relative}
+.crumb{font-size:13px;color:var(--hero-muted)}
+.crumb a{color:var(--hero-muted)}
+.r-hero h1{font-size:clamp(28px,4.4vw,42px);margin-top:8px}
+.r-hero p{color:var(--hero-muted);max-width:60ch;margin-top:10px}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:22px}
+.subtabs a{color:var(--hero-fg);background:var(--hero-card);text-decoration:none;font-weight:600;font-size:14px;padding:10px 14px;border-radius:10px;border:1px solid var(--hero-card-line);min-height:42px;display:inline-flex;align-items:center}
+.subtabs a:hover{background:var(--hero-card-hover)}
+.subtabs a.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.r-body{padding-block:36px 56px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+@media (max-width:900px){.r-body{grid-template-columns:1fr}}
+.side{position:sticky;top:calc(84px + env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:14px}
+@media (max-width:900px){.side{position:static}}
+.side .box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.side .box h4{font-size:15px;margin-bottom:8px}
+.side ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px}
+.side .box.cta{background:var(--navy);color:#fff;border:0}
+.side .box.cta p{color:#BCCAE8;font-size:14px;margin-bottom:12px}
+
+/* news */
+.news-list{display:grid;gap:14px}
+.news{display:grid;grid-template-columns:1fr;gap:6px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.news h3{font-size:18px}
+.news p{color:var(--muted);font-size:15px}
+.news .m{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+
+/* form */
+form.lead{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:620px){.row2{grid-template-columns:1fr}}
+label.f{display:grid;gap:6px;font-weight:600;font-size:14px}
+label.f input,label.f select,label.f textarea{font:400 16px var(--font-body);padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);width:100%;min-height:46px}
+label.f textarea{min-height:96px;resize:vertical}
+.ok{background:var(--surface-2);border-left:4px solid var(--gold);padding:12px 14px;border-radius:8px;font-size:15px}
+
+/* footer */
+.site-foot{background:var(--foot-bg);color:var(--foot-fg);border-top:3px solid var(--gold);padding-block:36px calc(36px + env(safe-area-inset-bottom,0px))}
+.foot-in{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:24px}
+@media (max-width:860px){.foot-in{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.foot-in{grid-template-columns:1fr}}
+.site-foot h4{color:var(--foot-h);font-size:14px;margin-bottom:10px}
+.site-foot a{display:block;color:var(--foot-fg);text-decoration:none;font-size:14px;padding:3px 0}
+.site-foot .ln{display:block;color:var(--foot-fg);font-size:14px;padding:3px 0}
+.site-foot a:hover{color:var(--foot-h);text-decoration:underline}
+.site-foot small{display:block;margin-top:24px;color:#93A4CE;font-size:12px}
+.sample-bar{background:var(--gold);color:var(--on-gold);font-size:13px;font-weight:600;text-align:center;padding:6px 16px}
+.zalo{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:25;background:var(--gold);color:var(--on-gold);font:700 14px var(--font-body);padding:12px 16px;border-radius:999px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="sample-bar">Bản thử: nội dung và số liệu là mẫu, cần IEVN xác nhận trước khi đăng chính thức</div>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="#home" aria-label="IEVN, về trang chủ">
+      <img src="data:image/jpeg;base64,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" alt="Logo Investment Education Việt Nam">
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Điều hướng chính">
+      <a href="#home" data-p="home">Trang chủ</a>
+      <a href="#dai-loan" data-p="dai-loan">Du học Đài Loan</a>
+      <a href="#trung-quoc" data-p="trung-quoc">Du học Trung Quốc</a>
+      <a href="#hong-kong" data-p="hong-kong">Du học Hồng Kông</a>
+      <a href="#macau" data-p="macau">Du học Macau</a>
+      <a href="#tin-tuc" data-p="tin-tuc">Tin tức &amp; Kinh nghiệm</a>
+      <a href="#ve-ievn" data-p="ve-ievn">Về IEVN</a>
+      <a class="cta" href="#dang-ky" data-p="dang-ky">Đăng ký tư vấn</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <div>
+      <h4>Investment Education Việt Nam</h4>
+      <p style="font-size:14px">Tư vấn du học Đài Loan, Trung Quốc, Hồng Kông, Macau cho học sinh, sinh viên và phụ huynh.</p>
+    </div>
+    <div><h4>Du học</h4><a href="#dai-loan">Đài Loan</a><a href="#trung-quoc">Trung Quốc</a><a href="#hong-kong">Hồng Kông</a><a href="#macau">Macau</a></div>
+    <div><h4>Khám phá</h4><a href="#tin-tuc">Tin tức &amp; Kinh nghiệm</a><a href="#ve-ievn">Về IEVN</a><a href="#dang-ky">Đăng ký tư vấn</a></div>
+    <div><h4>Liên hệ</h4><span class="ln">Hotline: 0908 003 463 – 0707 057 567</span><a href="#dang-ky">Zalo: [điền số IEVN]</a><span class="ln">Địa chỉ: Sky Center - 5B Phổ Quang, Tân Sơn Hòa, TP.HCM</span></div>
+    <div style="grid-column:1/-1"><small>© 2026 IEVN. Thông tin học phí, học bổng, visa thay đổi theo từng năm. Luôn kiểm tra nguồn chính thức của trường và cơ quan có thẩm quyền.</small></div>
+  </div>
+</footer>
+<a class="zalo" href="#dang-ky">Tư vấn nhanh</a>
+
+<script>
+(function(){
+var REG_ORDER=['dai-loan','trung-quoc','hong-kong','macau'];
+var CLS={'dai-loan':'dl','trung-quoc':'tq','hong-kong':'hk','macau':'mc'};
+var R={
+'dai-loan':{name:'Đài Loan',hz:'台灣',color:'var(--c-dl)',
+ lead:'Môi trường thân thiện, chi phí vừa phải, nhiều chương trình cho người mới bắt đầu từ tiếng Hoa.',
+ programs:[
+  {t:'Hệ vừa học vừa làm',d:'Kết hợp học tập với làm việc theo quy định của trường và đơn vị hợp tác. Phù hợp bạn muốn giảm áp lực chi phí.',m:['Điều kiện theo từng trường','IEVN bổ sung chi tiết']},
+  {t:'Hệ dự bị đại học 1+4',d:'Một năm học tiếng Hoa và kiến thức nền, sau đó vào học đại học bốn năm. Lộ trình rõ ràng cho học sinh mới tốt nghiệp THPT.',m:['1 năm dự bị','4 năm đại học']},
+  {t:'Hệ INTENSE',d:'Chương trình theo mô hình riêng của IEVN. Nội dung chi tiết sẽ được bổ sung.',m:['IEVN bổ sung chi tiết']},
+  {t:'Hệ ngôn ngữ',d:'Học tiếng Hoa tại trung tâm ngôn ngữ của trường, từ nền tảng đến chuẩn bị thi chứng chỉ.',m:['Ngắn hạn đến 1 năm','Thi TOCFL']},
+  {t:'Hệ Hoa Kiều',d:'Dành cho bạn thuộc diện Hoa Kiều theo quy định. Cần hồ sơ chứng minh nguồn gốc theo yêu cầu.',m:['Có điều kiện riêng','Cần kiểm tra hồ sơ']},
+  {t:'Hệ tự túc',d:'Tự chi trả học phí và sinh hoạt, linh hoạt chọn trường và ngành theo năng lực và nguyện vọng.',m:['Nhiều lựa chọn trường','Chủ động tài chính']},
+  {t:'Trại hè – Trại đông Đài Loan',d:'Trải nghiệm ngắn hạn tại trường, học tiếng Hoa, tham quan và giao lưu. Cách thử môi trường trước khi quyết định.',m:['Ngắn hạn','Phù hợp học sinh THPT']}
+ ],
+ schools:[
+  ['Đại học Quốc lập Đài Loan','NTU','Trường tổng hợp hàng đầu, mạnh nhiều ngành'],
+  ['Đại học Quốc lập Thanh Hoa','NTHU','Kỹ thuật, khoa học, bán dẫn'],
+  ['Đại học Quốc lập Thành Công','NCKU','Kỹ thuật, y, thiết kế'],
+  ['Đại học Quốc lập Chính Trị','NCCU','Xã hội, truyền thông, thương mại'],
+  ['ĐH Khoa học và Kỹ thuật Quốc lập Đài Loan','NTUST','Kỹ thuật, quản trị, công nghệ']
+ ],
+ majors:[['Bán dẫn và Điện tử','Nhu cầu nhân lực lớn trong ngành công nghệ'],['Quản trị kinh doanh','Học song song tiếng Hoa và kiến thức quản trị'],['Công nghệ thông tin','Nhiều chương trình có học phần tiếng Anh'],['Hoa ngữ và Giảng dạy tiếng Hoa','Phù hợp bạn thích ngôn ngữ và văn hóa']],
+ sch:[['Học bổng Chính phủ Đài Loan','Dành cho sinh viên quốc tế, có yêu cầu học lực và hồ sơ riêng.'],['Học bổng ICDF','Chương trình học bổng theo lĩnh vực và đối tượng chỉ định.'],['Học bổng của từng trường','Nhiều trường có mức hỗ trợ học phí cho sinh viên quốc tế.']],
+ costs:[['Học phí','Mức trung bình, khác nhau giữa trường công, tư và ngành học',2],['Nhà ở','Ký túc xá hoặc thuê ngoài, ký túc xá thường rẻ hơn',2],['Ăn uống','Đa dạng, có nhiều lựa chọn giá mềm',2],['Bảo hiểm và y tế','Bảo hiểm y tế dành cho người nước ngoài theo quy định',1]],
+ life:[
+  {t:'Khám phá cuộc sống tại Đài Loan',d:'Thành phố gọn, giao thông công cộng thuận tiện, chợ đêm, quán cà phê và nhịp sống thoải mái. Dùng chữ Hán phồn thể.'},
+  {t:'Sinh hoạt và hòa nhập',d:'Câu lạc bộ trường, hoạt động cho sinh viên quốc tế và cộng đồng người Việt giúp bạn nhanh quen môi trường mới.'},
+  {t:'Học tập, làm thêm và cơ hội việc làm',d:'Sinh viên quốc tế được làm thêm theo quy định hiện hành và cần giấy phép phù hợp. Sau tốt nghiệp có nhiều doanh nghiệp công nghệ và sản xuất tuyển dụng.'}
+ ],
+ finance:'IEVN hỗ trợ lập kế hoạch ngân sách, chuẩn bị hồ sơ chứng minh tài chính và định hướng các nguồn hỗ trợ phù hợp với từng gia đình.'
+},
+'trung-quoc':{name:'Trung Quốc',hz:'中國',color:'var(--c-tq)',
+ lead:'Hệ thống đại học lớn, nhiều học bổng và đa dạng ngành học, từ y khoa đến kỹ thuật.',
+ programs:[
+  {t:'Cử nhân',d:'Học đại học tại Trung Quốc, giảng dạy chủ yếu bằng tiếng Trung, một số ngành có chương trình tiếng Anh.',m:['4 năm (tùy ngành)','Thi HSK']},
+  {t:'Thạc sĩ và Tiến sĩ',d:'Sau đại học với nhiều hướng nghiên cứu, có cơ hội học bổng theo đề tài.',m:['Cần thư giới thiệu','Kế hoạch nghiên cứu']},
+  {t:'Học tiếng Trung',d:'Khóa ngôn ngữ chuẩn bị vào chuyên ngành. Học chữ giản thể và luyện thi HSK.',m:['6 tháng đến 1 năm']},
+  {t:'Chương trình học bổng chính phủ',d:'Con đường có hỗ trợ lớn nhưng cạnh tranh cao. Cần chuẩn bị hồ sơ sớm.',m:['Cạnh tranh cao','Chuẩn bị 12 tháng']}
+ ],
+ schools:[['Đại học Thanh Hoa','Tsinghua','Kỹ thuật, khoa học, quản lý'],['Đại học Bắc Kinh','Peking','Khoa học nhân văn và tự nhiên'],['Đại học Phục Đán','Fudan','Kinh tế, y, xã hội'],['Đại học Giao thông Thượng Hải','SJTU','Kỹ thuật, kinh doanh'],['Đại học Chiết Giang','ZJU','Công nghệ, nông nghiệp, y']],
+ majors:[['Y khoa','Thời gian học dài, cần chuẩn bị kỹ yêu cầu ngôn ngữ'],['Kỹ thuật và Công nghệ','Hệ sinh thái công nghiệp và công nghệ lớn'],['Kinh tế và Thương mại','Phù hợp bạn quan tâm thương mại Việt – Trung'],['Hoa ngữ','Nền tảng cho nhiều ngành khác']],
+ sch:[['Học bổng Chính phủ Trung Quốc (CSC)','Hỗ trợ học phí, ký túc xá và sinh hoạt phí tùy diện. Hồ sơ cạnh tranh.'],['Học bổng của trường','Nhiều trường có học bổng cho sinh viên quốc tế theo thành tích.'],['Học bổng chính quyền địa phương','Một số tỉnh, thành phố có quỹ hỗ trợ riêng.']],
+ costs:[['Học phí','Thường thấp đến trung bình, tùy ngành và trường',1],['Nhà ở','Ký túc xá sinh viên quốc tế phổ biến',1],['Ăn uống','Nhiều lựa chọn, căn tin trường giá mềm',1],['Bảo hiểm và y tế','Bắt buộc có bảo hiểm cho sinh viên quốc tế',1]],
+ life:[
+  {t:'Khám phá cuộc sống tại Trung Quốc',d:'Thanh toán di động rất phổ biến, tàu cao tốc nối nhiều thành phố. Dùng chữ giản thể.'},
+  {t:'Sinh hoạt và hòa nhập',d:'Ký túc xá quốc tế, bạn cùng phòng và hoạt động của khoa giúp bạn làm quen. Nên học tiếng Trung sớm.'},
+  {t:'Học tập, làm thêm và cơ hội việc làm',d:'Quy định làm thêm của sinh viên quốc tế khá chặt, cần kiểm tra kỹ trước khi đi. Cơ hội việc làm gắn với doanh nghiệp có quan hệ Việt – Trung.'}
+ ],
+ finance:'IEVN hỗ trợ định hướng học bổng, lập kế hoạch ngân sách và chuẩn bị hồ sơ chứng minh tài chính phù hợp với từng chương trình.'
+},
+'hong-kong':{name:'Hồng Kông',hz:'香港',color:'var(--c-hk)',
+ lead:'Trung tâm tài chính quốc tế, giảng dạy chủ yếu bằng tiếng Anh, phù hợp bạn hướng tới môi trường toàn cầu.',
+ programs:[
+  {t:'Cử nhân giảng dạy bằng tiếng Anh',d:'Phần lớn chương trình dùng tiếng Anh. Xét tuyển theo học bạ, chứng chỉ tiếng Anh và hồ sơ cá nhân.',m:['IELTS/TOEFL','Xét tuyển cạnh tranh']},
+  {t:'Sau đại học',d:'Thạc sĩ ngắn hạn và nghiên cứu, nhiều ngành tài chính, dữ liệu, kinh doanh.',m:['1 đến 2 năm']},
+  {t:'Associate Degree và Cao đẳng',d:'Lộ trình bắt đầu từ hệ liên thông, sau đó chuyển tiếp lên đại học.',m:['Hệ liên thông','Chi phí linh hoạt hơn']},
+  {t:'Chương trình học bổng nghiên cứu',d:'Hướng đến tiến sĩ với hỗ trợ tài chính, yêu cầu học thuật cao.',m:['Cạnh tranh cao']}
+ ],
+ schools:[['Đại học Hồng Kông','HKU','Trường tổng hợp lâu đời'],['Đại học Trung văn Hồng Kông','CUHK','Đa ngành, mạnh nghiên cứu'],['Đại học Khoa học và Công nghệ Hồng Kông','HKUST','Công nghệ, kinh doanh'],['Đại học Bách khoa Hồng Kông','PolyU','Ứng dụng, thiết kế, kỹ thuật'],['Đại học Thành phố Hồng Kông','CityU','Kinh doanh, kỹ thuật, luật']],
+ majors:[['Tài chính','Hồng Kông là trung tâm tài chính quốc tế'],['Khoa học dữ liệu','Học bằng tiếng Anh, nhiều lựa chọn sau đại học'],['Quản trị kinh doanh','Môi trường quốc tế, mạng lưới doanh nghiệp'],['Y sinh','Nghiên cứu mạnh, yêu cầu học thuật cao']],
+ sch:[['Hong Kong PhD Fellowship Scheme (HKPFS)','Học bổng tiến sĩ, hồ sơ cạnh tranh cao.'],['Học bổng đầu vào của trường','Nhiều trường dành học bổng cho ứng viên xuất sắc.'],['Hỗ trợ theo thành tích','Một số khoa có hỗ trợ theo kết quả học tập.']],
+ costs:[['Học phí','Cao hơn các khu vực còn lại, tùy ngành',4],['Nhà ở','Chi phí nhà ở cao, ký túc xá khó đăng ký',4],['Ăn uống','Đa dạng, mức giá từ bình dân đến cao',3],['Bảo hiểm và y tế','Cần bảo hiểm theo yêu cầu của trường',2]],
+ life:[
+  {t:'Khám phá cuộc sống tại Hồng Kông',d:'Thành phố dày đặc, nhịp sống nhanh, giao thông công cộng rất thuận tiện. Dùng tiếng Quảng Đông và tiếng Anh.'},
+  {t:'Sinh hoạt và hòa nhập',d:'Môi trường quốc tế, nhiều sinh viên đến từ khắp nơi. Chi phí ở là bài toán cần tính kỹ.'},
+  {t:'Học tập, làm thêm và cơ hội việc làm',d:'Có cơ chế cho sinh viên tốt nghiệp ở lại tìm việc, cần kiểm tra quy định hiện hành. Cơ hội mạnh ở tài chính, thương mại, công nghệ.'}
+ ],
+ finance:'IEVN hỗ trợ tính tổng chi phí, định hướng học bổng đầu vào và chuẩn bị hồ sơ chứng minh tài chính.'
+},
+'macau':{name:'Macau',hz:'澳門',color:'var(--c-mc)',
+ lead:'Thành phố nhỏ, đa văn hóa Trung – Bồ, mạnh về du lịch, giải trí và dịch vụ.',
+ programs:[
+  {t:'Cử nhân',d:'Chương trình bằng tiếng Trung, tiếng Anh hoặc cả hai tùy trường và ngành.',m:['4 năm','Nhiều ngôn ngữ giảng dạy']},
+  {t:'Sau đại học',d:'Thạc sĩ và tiến sĩ ở các trường đại học trong khu vực.',m:['1 đến 3 năm']},
+  {t:'Học tiếng',d:'Khóa ngôn ngữ chuẩn bị vào chuyên ngành, tiếng Trung hoặc tiếng Anh.',m:['Ngắn hạn']},
+  {t:'Chương trình ngắn hạn',d:'Trải nghiệm một học kỳ hoặc hè, thử môi trường trước khi quyết định.',m:['Ngắn hạn']}
+ ],
+ schools:[['Đại học Macau','UM','Trường công lập lớn nhất'],['ĐH Khoa học và Công nghệ Macau','MUST','Đa ngành, nhiều chương trình quốc tế'],['Đại học Bách khoa Macau','MPU','Ứng dụng, thực hành'],['Viện Du lịch Macau','IFTM','Du lịch, khách sạn, ẩm thực']],
+ majors:[['Du lịch và Khách sạn','Ngành mũi nhọn của địa phương'],['Quản trị giải trí','Gắn với ngành dịch vụ và sự kiện'],['Luật','Hệ thống pháp lý đặc thù'],['Truyền thông','Phù hợp bạn thích nội dung, báo chí, quảng bá']],
+ sch:[['Học bổng của chính quyền Macau','Dành cho sinh viên đủ điều kiện, theo quy định hiện hành.'],['Học bổng của từng trường','Mỗi trường có chính sách riêng, nên kiểm tra sớm.'],['Hỗ trợ theo thành tích','Dựa trên kết quả học tập và hồ sơ.']],
+ costs:[['Học phí','Mức trung bình đến cao tùy trường',3],['Nhà ở','Thành phố nhỏ, thuê nhà khá cao',3],['Ăn uống','Đa dạng, có nhiều món Âu – Á',2],['Bảo hiểm và y tế','Theo yêu cầu của trường',2]],
+ life:[
+  {t:'Khám phá cuộc sống tại Macau',d:'Thành phố gọn, đi bộ được, pha trộn kiến trúc và ẩm thực Trung – Bồ. Dùng tiếng Quảng Đông, tiếng Trung và tiếng Anh.'},
+  {t:'Sinh hoạt và hòa nhập',d:'Cộng đồng sinh viên quốc tế nhỏ nhưng gắn kết. Dễ di chuyển sang Hồng Kông và Chu Hải.'},
+  {t:'Học tập, làm thêm và cơ hội việc làm',d:'Cơ hội tập trung ở du lịch, giải trí, dịch vụ. Quy định làm thêm cần kiểm tra theo từng trường.'}
+ ],
+ finance:'IEVN hỗ trợ lập kế hoạch ngân sách và chuẩn bị hồ sơ phù hợp với từng trường.'
+}
+};
+var SUBS=[['chuong-trinh','Chương trình du học'],['truong-nganh','Trường &amp; Ngành học'],['hoc-bong','Học bổng &amp; Chi phí'],['cuoc-song','Cuộc sống du học']];
+var NEWS=[
+ {r:'dai-loan',t:'Hệ 1+4 là gì? Ai nên chọn, ai nên cân nhắc',d:'Giải thích lộ trình một năm dự bị cộng bốn năm đại học, những điều cần chuẩn bị trước khi nộp hồ sơ.',read:'5 phút',date:'Bài mẫu'},
+ {r:'trung-quoc',t:'Chuẩn bị hồ sơ học bổng chính phủ Trung Quốc từ 12 tháng trước',d:'Các mốc nên làm sớm: chứng chỉ ngôn ngữ, thư giới thiệu, kế hoạch học tập.',read:'6 phút',date:'Bài mẫu'},
+ {r:'hong-kong',t:'Học đại học Hồng Kông bằng tiếng Anh cần chuẩn bị gì',d:'Chứng chỉ tiếng Anh, hồ sơ cá nhân và cách tính tổng chi phí cho cả khóa học.',read:'5 phút',date:'Bài mẫu'},
+ {r:'macau',t:'Macau cho người mới: học gì, sống ra sao, chi phí thế nào',d:'Tổng quan các trường, ngành nổi bật và nhịp sống tại thành phố nhỏ này.',read:'4 phút',date:'Bài mẫu'},
+ {r:'gen',t:'5 dấu hiệu nhận biết đơn vị tư vấn du học thiếu minh bạch',d:'Cam kết quá mức, thu phí không rõ ràng, hồ sơ không được thông tin đầy đủ.',read:'4 phút',date:'Bài mẫu'},
+ {r:'gen',t:'Lộ trình 12 tháng trước ngày bay',d:'Từ chọn nơi học, nộp hồ sơ, xin visa đến chuẩn bị hành trang.',read:'6 phút',date:'Bài mẫu'}
+];
+var COMPARE=[
+ ['Ngôn ngữ giảng dạy',['Tiếng Trung, một số ngành có tiếng Anh','Tiếng Trung, một số ngành có tiếng Anh','Chủ yếu tiếng Anh','Trung, Anh, tùy trường']],
+ ['Mức chi phí tương đối',[2,1,4,3]],
+ ['Cơ hội học bổng',[3,4,2,2]],
+ ['Độ cạnh tranh đầu vào',[2,3,4,2]],
+ ['Phù hợp với',['Bạn muốn môi trường thân thiện, chi phí vừa phải','Bạn muốn học bổng và nhiều lựa chọn ngành','Bạn hướng tới tài chính, môi trường quốc tế','Bạn thích du lịch, dịch vụ, thành phố nhỏ']]
+];
+
+function esc(s){return String(s)}
+function dots(n,max){var h='<span class="dots" aria-hidden="true">';for(var i=1;i<=max;i++)h+='<i class="'+(i<=n?'f':'')+'"></i>';return h+'</span>'}
+function tag(k){if(k==='gen')return '<span class="tag gen">Chung</span>';return '<span class="tag '+CLS[k]+'">'+R[k].name+'</span>'}
+function sect(eyebrow,title,desc,extra){return '<div class="sec-head"><div><div class="eyebrow">'+eyebrow+'</div><h2>'+title+'</h2>'+(desc?'<p>'+desc+'</p>':'')+'</div>'+(extra||'')+'</div>'}
+
+/* ---------- HOME ---------- */
+var homeFilter='all';
+var LV=['','Thấp','Vừa','Khá cao','Cao'];
+function bl(arr){return '<ul class="hl">'+arr.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
+function regionBlockHTML(k){
+ var r=R[k];
+ var more=function(n,w){return n>0?'+'+n+' '+w+' khác':''};
+ var prog=r.programs.slice(0,3).map(function(p){return p.t});
+ if(r.programs.length>3)prog.push(more(r.programs.length-3,'chương trình'));
+ var sch=['Trường: '+r.schools.slice(0,3).map(function(s){return s[1]}).join(', ')+(r.schools.length>3?' và '+(r.schools.length-3)+' trường khác':''),'Ngành: '+r.majors.slice(0,2).map(function(m){return m[0]}).join(', ')];
+ var hb=r.sch.slice(0,2).map(function(s){return s[0]});
+ hb.push('Học phí: '+dots(r.costs[0][2],4)+LV[r.costs[0][2]]);
+ var life=r.life.map(function(l){return l.t});
+ var card=function(title,items,sub){return '<article class="card"><h3>'+title+'</h3>'+bl(items)+'<a class="more" href="#'+k+'-'+sub+'">Xem chi tiết →</a></article>'};
+ return '<div class="reg-sec"><div class="reg-head"><div class="reg-name"><span class="hzs" style="color:'+r.color+'">'+r.hz+'</span><b>Du học '+r.name+'</b></div><a class="btn gold" href="#'+k+'">Vào trang Du học '+r.name+' →</a></div>'+
+  '<div class="grid g4">'+card('Chương trình du học',prog,'chuong-trinh')+card('Trường &amp; Ngành học',sch,'truong-nganh')+card('Học bổng &amp; Chi phí',hb,'hoc-bong')+card('Cuộc sống du học',life,'cuoc-song')+'</div></div>';
+}
+function regionsBlockHTML(){return REG_ORDER.map(regionBlockHTML).join('')}
+function compareTable(){
+ return '<div class="tbl-wrap"><table><thead><tr><th></th>'+
+ REG_ORDER.map(function(k){return '<th><a href="#'+k+'" style="color:inherit;text-decoration:none">'+R[k].name+'<span class="hz">'+R[k].hz+'</span></a></th>'}).join('')+'</tr></thead><tbody>'+
+ COMPARE.map(function(row){return '<tr><th scope="row">'+row[0]+'</th>'+row[1].map(function(v){return '<td>'+(typeof v==='number'?dots(v,4)+LV[v]:v)+'</td>'}).join('')+'</tr>'}).join('')+
+ '</tbody></table></div><p class="note">Thang 1 đến 4, mang tính tham khảo. Cần IEVN rà soát và cập nhật theo năm tuyển sinh.</p>';
+}
+function compareHTML(){
+ return '<section class="r-hero"><div class="wrap r-hero-in"><div class="crumb"><a href="#home">Trang chủ</a> / So sánh các nước</div><h1>So sánh nhanh các nước</h1><p>Đài Loan, Trung Quốc, Hồng Kông và Macau trong một bảng. Chọn một nơi để xem thông tin chi tiết.</p></div></section>'+
+ '<section class="blk"><div class="wrap">'+compareTable()+
+ '<h3 class="sub-h">Xem chi tiết từng nơi</h3><div class="grid g4">'+REG_ORDER.map(function(k){var r=R[k];return '<a class="card" href="#'+k+'"><span style="font-size:34px;font-weight:700;line-height:1;font-family:\'Noto Sans TC\',sans-serif;color:'+r.color+'">'+r.hz+'</span><h3>Du học '+r.name+'</h3><p>'+r.lead+'</p><span class="more" style="margin-top:auto">Xem thông tin chi tiết →</span></a>'}).join('')+'</div>'+
+ '<p style="margin-top:28px"><a class="btn gold" href="#dang-ky">Đăng ký tư vấn</a></p></div></section>';
+}
+function homeHTML(){
+ var h='';
+ h+='<section class="hero"><div class="wrap hero-in"><div>'+
+  '<div class="eyebrow">Du học Đông Á</div>'+
+  '<h1>Chọn đúng nơi, đúng ngành, đúng <em>ngân sách</em></h1>'+
+  '<p class="lead" style="font-size:19px;font-weight:500">Đi xa một chút, để tương lai gần hơn rất nhiều.</p>'+
+  '<div class="hero-actions"><a class="btn gold" href="#dang-ky">Đăng ký tư vấn miễn phí</a><button class="btn ghost" type="button" data-scroll="goi-y">Làm bài gợi ý 1 phút</button></div>'+
+  '</div><div class="picker">';
+ REG_ORDER.forEach(function(k){var r=R[k];
+  h+='<a class="pick" href="#'+k+'"><i style="background:'+r.color+'"></i><span class="hz">'+r.hz+'</span><span><b>Du học '+r.name+'</b><small>Xem thông tin chi tiết</small></span></a>';});
+ h+='<a class="pick maybe" href="#home" data-scroll="goi-y"><span><b>Mình chưa biết chọn nơi nào</b><small>Làm bài gợi ý 1 phút</small></span><span style="font-size:22px" aria-hidden="true">→</span></a>';
+ h+='</div></div></section>';
+
+
+ h+='<section class="blk alt" id="kham-pha"><div class="wrap">'+sect('','Thông tin nổi bật','',
+  '<div class="chips" role="group" aria-label="Lọc theo khu vực">'+
+  [['all','Tất cả']].concat(REG_ORDER.map(function(k){return [k,R[k].name]})).map(function(c){return '<button type="button" class="chip" data-filter="'+c[0]+'" aria-pressed="'+(homeFilter===c[0])+'">'+c[1]+'</button>'}).join('')+'</div>')+
+  '<div id="explore"></div></div></section>';
+
+ h+='<section class="blk band-navy" id="goi-y"><div class="wrap">'+sect('Gợi ý','Nơi nào hợp với bạn?','Trả lời 3 câu để có gợi ý ban đầu. Đây chỉ là điểm xuất phát, tư vấn viên sẽ giúp bạn cân nhắc kỹ hơn.')+
+ '<div class="quiz"><form id="quizForm">'+
+ quizQ('q1','1. Ngân sách hằng năm của gia đình',[['low','Cần tiết kiệm'],['mid','Vừa phải'],['high','Có thể đầu tư nhiều']])+
+ quizQ('q2','2. Ngôn ngữ bạn muốn học',[['en','Học bằng tiếng Anh'],['zh','Muốn giỏi tiếng Trung'],['both','Cả hai']])+
+ quizQ('q3','3. Điều bạn ưu tiên nhất',[['schol','Học bổng'],['job','Cơ hội việc làm quốc tế'],['fit','Dễ hòa nhập'],['top','Trường danh tiếng']])+
+ '<button class="btn gold" type="submit">Xem gợi ý</button></form>'+
+ '<div class="result" id="quizResult" aria-live="polite"><div class="eyebrow">Kết quả</div><h3>Chọn đủ 3 câu để xem gợi ý</h3><p>Kết quả sẽ hiện ở đây.</p></div></div></div></section>';
+
+ h+='<section class="blk alt"><div class="wrap">'+sect('Tin tức &amp; Kinh nghiệm','Đọc trước khi quyết định','',
+  '<a class="btn line" href="#tin-tuc">Xem tất cả</a>')+
+  '<div class="grid g3">'+NEWS.slice(0,3).map(newsCard).join('')+'</div></div></section>';
+
+ h+='<section class="blk" id="khu-vuc"><div class="wrap">'+sect('','Du học theo từng khu vực','')+
+  '<div id="regions-block"></div></div></section>';
+
+ h+='<section class="blk band-navy"><div class="wrap">'+sect('Vì sao chọn IEVN','Minh bạch từng bước','')+
+  '<div class="grid g3">'+
+  '<div class="card"><h3>Thông tin rõ ràng</h3><p>Mỗi số liệu có nguồn và ngày cập nhật. Không hứa những điều không chắc chắn.</p></div>'+
+  '<div class="card"><h3>Lộ trình cá nhân hóa</h3><p>Dựa trên học lực, ngân sách và mục tiêu nghề nghiệp của từng bạn.</p></div>'+
+  '<div class="card"><h3>Đồng hành đến khi nhập học</h3><p>Từ chọn trường, hồ sơ, visa đến những ngày đầu ở nơi mới.</p></div>'+
+  '</div></div></section>';
+
+ h+='<section class="blk" style="background:var(--hero-bg);color:var(--hero-fg)"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between"><div><h2 style="font-size:clamp(22px,3vw,30px)">Sẵn sàng bàn về kế hoạch của bạn?</h2><p style="color:var(--hero-muted);margin-top:6px">Để lại thông tin, IEVN sẽ liên hệ tư vấn.</p></div><a class="btn gold" href="#dang-ky">Đăng ký tư vấn</a></div></section>';
+ return h;
+}
+function quizQ(n,label,opts){return '<fieldset class="q"><legend>'+label+'</legend><div class="opts">'+opts.map(function(o,i){var id=n+'_'+o[0];return '<input type="radio" name="'+n+'" id="'+id+'" value="'+o[0]+'"><label for="'+id+'">'+o[1]+'</label>'}).join('')+'</div></fieldset>'}
+function newsCard(n){return '<article class="card">'+tag(n.r)+'<h3>'+n.t+'</h3><p>'+n.d+'</p><div class="meta"><span class="pill">'+n.date+'</span><span class="pill">'+n.read+' đọc</span></div></article>'}
+
+function exploreHTML(){
+ var keys=homeFilter==='all'?REG_ORDER:[homeFilter];
+ var h='';
+ h+='<h3 class="sub-h">Trường nổi bật</h3><div class="grid g3">';
+ keys.forEach(function(k){R[k].schools.slice(0,homeFilter==='all'?2:6).forEach(function(s){h+='<article class="card">'+tag(k)+'<h3>'+s[0]+'</h3><p>'+s[2]+'</p><div class="meta"><span class="pill">'+s[1]+'</span></div></article>'})});
+ h+='</div><h3 class="sub-h">Ngành học nổi bật</h3><div class="grid g4">';
+ keys.forEach(function(k){R[k].majors.slice(0,homeFilter==='all'?2:6).forEach(function(m){h+='<article class="card">'+tag(k)+'<h3>'+m[0]+'</h3><p>'+m[1]+'</p></article>'})});
+ h+='</div><h3 class="sub-h">Học bổng</h3><div class="grid g3">';
+ keys.forEach(function(k){R[k].sch.slice(0,homeFilter==='all'?1:6).forEach(function(s){h+='<article class="card">'+tag(k)+'<h3>'+s[0]+'</h3><p>'+s[1]+'</p><div class="meta"><span class="pill">Hạn nộp: IEVN cập nhật</span></div></article>'})});
+ h+='</div>';
+ if(homeFilter!=='all')h+='<p style="margin-top:20px"><a class="btn gold" href="#'+homeFilter+'">Vào trang Du học '+R[homeFilter].name+'</a></p>';
+ return h;
+}
+
+/* ---------- REGION ---------- */
+function regionHTML(k,sub){
+ var r=R[k];sub=sub||'chuong-trinh';
+ var h='<section class="r-hero" style="--rc:'+r.color+'"><span class="hzbig" aria-hidden="true">'+r.hz+'</span><div class="wrap r-hero-in">'+
+  '<div class="crumb"><a href="#home">Trang chủ</a> / Du học '+r.name+'</div><h1>Du học '+r.name+'</h1><p>'+r.lead+'</p>'+
+  '<nav class="subtabs" aria-label="Mục của trang">'+SUBS.map(function(s){return '<a href="#'+k+'-'+s[0]+'" class="'+(s[0]===sub?'on':'')+'">'+s[1]+'</a>'}).join('')+'</nav></div></section>';
+ h+='<div class="wrap r-body"><div><a class="cmp-banner" href="#so-sanh"><b>Còn đang phân vân giữa các nơi?</b><span>So sánh nhanh 4 nơi →</span></a>';
+ if(sub==='chuong-trinh'){
+  h+='<h2 style="font-size:24px;margin-bottom:16px">Chương trình du học '+r.name+'</h2><div class="grid g2">'+
+   r.programs.map(function(p){return '<article class="card"><h3>'+p.t+'</h3><p>'+p.d+'</p><div class="meta">'+p.m.map(function(x){return '<span class="pill">'+x+'</span>'}).join('')+'</div></article>'}).join('')+'</div>';
+ }else if(sub==='truong-nganh'){
+  h+='<h3 class="sub-h">Danh sách trường tiêu biểu</h3><div class="grid g2">'+r.schools.map(function(s){return '<article class="card"><h3>'+s[0]+'</h3><p>'+s[2]+'</p><div class="meta"><span class="pill">'+s[1]+'</span></div></article>'}).join('')+'</div>'+
+  '<p class="note">Danh sách mang tính giới thiệu, không phải xếp hạng. IEVN sẽ bổ sung đầy đủ.</p>'+
+  '<h3 class="sub-h">Khám phá ngành học</h3><div class="grid g2">'+r.majors.map(function(m){return '<article class="card"><h3>'+m[0]+'</h3><p>'+m[1]+'</p></article>'}).join('')+'</div>';
+ }else if(sub==='hoc-bong'){
+  h+='<h3 class="sub-h">Các chương trình học bổng</h3><div class="grid g2">'+r.sch.map(function(s){return '<article class="card"><h3>'+s[0]+'</h3><p>'+s[1]+'</p><div class="meta"><span class="pill">Hạn nộp: IEVN cập nhật</span></div></article>'}).join('')+'</div>'+
+  '<h3 class="sub-h">Học phí và chi phí sinh hoạt</h3><div class="tbl-wrap"><table style="min-width:560px"><thead><tr><th>Khoản</th><th>Mô tả</th><th>Mức tương đối</th></tr></thead><tbody>'+
+  r.costs.map(function(c){return '<tr><th scope="row" style="color:var(--fg)">'+c[0]+'</th><td>'+c[1]+'</td><td>'+dots(c[2],4)+'</td></tr>'}).join('')+'</tbody></table></div>'+
+  '<p class="note">Con số cụ thể theo từng trường và từng năm sẽ được IEVN cập nhật.</p>'+
+  '<h3 class="sub-h">Tư vấn tài chính và hỗ trợ du học</h3><div class="card navy"><p>'+r.finance+'</p><div class="meta"><a class="btn gold" href="#dang-ky">Nhận tư vấn tài chính</a></div></div>';
+ }else{
+  h+='<h2 style="font-size:24px;margin-bottom:16px">Cuộc sống du học tại '+r.name+'</h2><div class="grid">'+
+   r.life.map(function(l){return '<article class="card"><h3>'+l.t+'</h3><p>'+l.d+'</p></article>'}).join('')+'</div>'+
+   '<div class="tbd" style="margin-top:16px">Khu vực dành cho ảnh, video và câu chuyện của du học sinh IEVN tại '+r.name+'.</div>';
+ }
+ h+='</div><aside class="side">'+
+  '<div class="box cta"><h4>Cần tư vấn về '+r.name+'?</h4><p>Để lại thông tin, IEVN sẽ gọi lại cho bạn.</p><a class="btn gold" style="width:100%" href="#dang-ky-'+k+'">Đăng ký tư vấn</a></div>'+
+  '<div class="box"><h4>Xem nhanh</h4><ul>'+SUBS.map(function(s){return '<li><a href="#'+k+'-'+s[0]+'">'+s[1]+'</a></li>'}).join('')+'</ul></div>'+
+  '<div class="box compare"><h4>Còn đang phân vân?</h4><p>Xem bảng so sánh nhanh Đài Loan, Trung Quốc, Hồng Kông và Macau.</p><a class="btn gold" style="width:100%" href="#so-sanh">So sánh 4 nơi</a></div>'+
+ '</aside></div>';
+ return h;
+}
+
+/* ---------- NEWS / ABOUT / CONTACT ---------- */
+var newsFilter='all';
+function newsHTML(){
+ var items=NEWS.filter(function(n){return newsFilter==='all'||n.r===newsFilter});
+ return '<section class="blk"><div class="wrap">'+sect('Tin tức &amp; Kinh nghiệm','Thông tin để bạn quyết định','Bài viết mẫu. IEVN sẽ thay bằng bài thật.',
+  '<div class="chips" role="group" aria-label="Lọc bài viết">'+[['all','Tất cả'],['gen','Chung']].concat(REG_ORDER.map(function(k){return [k,R[k].name]})).map(function(c){return '<button type="button" class="chip" data-nfilter="'+c[0]+'" aria-pressed="'+(newsFilter===c[0])+'">'+c[1]+'</button>'}).join('')+'</div>')+
+  '<div class="grid g3">'+(items.length?items.map(newsCard).join(''):'<div class="tbd">Chưa có bài trong mục này.</div>')+'</div></div></section>';
+}
+function aboutHTML(){
+ return '<section class="r-hero"><div class="wrap r-hero-in"><div class="crumb"><a href="#home">Trang chủ</a> / Về IEVN</div><h1>Investment Education Việt Nam</h1><p>Đơn vị tư vấn du học khu vực Đông Á. Nội dung giới thiệu bên dưới là mẫu, IEVN cần thay bằng thông tin thật.</p></div></section>'+
+ '<section class="blk"><div class="wrap">'+sect('Cam kết','IEVN làm việc thế nào','')+
+ '<div class="grid g3"><div class="card"><h3>Minh bạch</h3><p>Phí dịch vụ và quyền lợi nêu rõ bằng văn bản trước khi bắt đầu.</p></div><div class="card"><h3>Trung thực</h3><p>Không cam kết kết quả vượt quá khả năng. Cập nhật thông tin theo quy định mới.</p></div><div class="card"><h3>Đồng hành</h3><p>Hỗ trợ từ lúc chọn trường đến khi ổn định cuộc sống tại nơi học.</p></div></div>'+
+ '<h3 class="sub-h" style="margin-top:36px">Quy trình tư vấn</h3><div class="steps">'+
+ [['Tư vấn ban đầu','Tìm hiểu mục tiêu, học lực và ngân sách.'],['Chọn nơi và chương trình','Đề xuất lựa chọn phù hợp, giải thích ưu nhược điểm.'],['Chuẩn bị hồ sơ','Hướng dẫn giấy tờ, bài luận, chứng chỉ ngôn ngữ.'],['Nộp hồ sơ và visa','Theo dõi tiến trình, hỗ trợ khi cần bổ sung.'],['Chuẩn bị lên đường','Định hướng ở, di chuyển, hòa nhập tại nơi mới.']].map(function(s){return '<div class="step"><div><b>'+s[0]+'</b><span>'+s[1]+'</span></div></div>'}).join('')+'</div>'+
+ '<div class="tbd" style="margin-top:28px">Khu vực dành cho đội ngũ tư vấn, đối tác trường, giấy phép hoạt động và câu chuyện học viên của IEVN.</div></div></section>';
+}
+function contactHTML(pre){
+ return '<section class="r-hero"><div class="wrap r-hero-in"><div class="crumb"><a href="#home">Trang chủ</a> / Đăng ký tư vấn</div><h1>Đăng ký tư vấn</h1><p>Điền vài thông tin, IEVN sẽ liên hệ để trao đổi về lộ trình phù hợp. Bạn cũng có thể gọi hotline 0908 003 463 – 0707 057 567 hoặc đến văn phòng tại Sky Center - 5B Phổ Quang, Tân Sơn Hòa, TP.HCM.</p></div></section>'+
+ '<section class="blk"><div class="wrap" style="max-width:760px"><form class="lead" id="leadForm">'+
+ '<div class="row2"><label class="f">Họ và tên<input id="f_name" required autocomplete="name"></label><label class="f">Số điện thoại hoặc Zalo<input id="f_phone" required inputmode="tel" autocomplete="tel"></label></div>'+
+ '<div class="row2"><label class="f">Bạn là<select id="f_who"><option>Học sinh</option><option>Sinh viên</option><option>Phụ huynh</option></select></label>'+
+ '<label class="f">Nơi bạn quan tâm<select id="f_reg"><option value="">Chưa biết, cần tư vấn</option>'+REG_ORDER.map(function(k){return '<option value="'+k+'"'+(pre===k?' selected':'')+'>'+R[k].name+'</option>'}).join('')+'</select></label></div>'+
+ '<label class="f">Bạn muốn hỏi điều gì?<textarea id="f_msg" placeholder="Ví dụ: ngân sách, ngành mong muốn, thời điểm dự định đi"></textarea></label>'+
+ '<button class="btn gold" type="submit">Gửi đăng ký</button><div id="formMsg" aria-live="polite"></div></form></div></section>';
+}
+
+/* ---------- ROUTER ---------- */
+var app=document.getElementById('app');
+function parse(){
+ var h=(location.hash||'#home').slice(1);
+ for(var i=0;i<REG_ORDER.length;i++){var k=REG_ORDER[i];
+  if(h===k)return {p:'region',k:k,sub:'chuong-trinh'};
+  if(h.indexOf(k+'-')===0){var s=h.slice(k.length+1);
+   if(s==='dang-ky'||s.indexOf('dang-ky')===0)return {p:'dang-ky'};
+   return {p:'region',k:k,sub:s};}
+ }
+ if(h==='so-sanh')return {p:'so-sanh'};
+ if(h==='tin-tuc')return {p:'tin-tuc'};
+ if(h==='ve-ievn')return {p:'ve-ievn'};
+ if(h.indexOf('dang-ky')===0){var rg=h.slice(8);return {p:'dang-ky',pre:REG_ORDER.indexOf(rg)>=0?rg:''}}
+ return {p:'home'};
+}
+var lastKey='';
+function render(){
+ var r=parse();var key=r.p+(r.k||'')+(r.sub||'');
+ var html;
+ if(r.p==='home'){html=homeHTML();}
+ else if(r.p==='region'){html=regionHTML(r.k,r.sub);}
+ else if(r.p==='so-sanh'){html=compareHTML();}
+ else if(r.p==='tin-tuc'){html=newsHTML();}
+ else if(r.p==='ve-ievn'){html=aboutHTML();}
+ else{html=contactHTML(r.pre);}
+ app.innerHTML=html;
+ if(r.p==='home'){document.getElementById('explore').innerHTML=exploreHTML();document.getElementById('regions-block').innerHTML=regionsBlockHTML();}
+ var navP=r.p==='region'?r.k:r.p;
+ document.querySelectorAll('.nav a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-p')===navP)});
+ document.getElementById('nav').classList.remove('open');document.getElementById('menuBtn').setAttribute('aria-expanded','false');
+ var parts=r.k?R[r.k].name:'';
+ document.title='IEVN Du học Đông Á';
+ if(key!==lastKey)window.scrollTo(0,0);
+ lastKey=key;
+}
+window.addEventListener('hashchange',render);
+document.getElementById('menuBtn').addEventListener('click',function(){var n=document.getElementById('nav');var o=n.classList.toggle('open');this.setAttribute('aria-expanded',o)});
+
+document.addEventListener('click',function(e){
+ var f=e.target.closest('[data-filter]');
+ if(f){homeFilter=f.getAttribute('data-filter');document.querySelectorAll('[data-filter]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-filter')===homeFilter)});document.getElementById('explore').innerHTML=exploreHTML();return}
+ var nf=e.target.closest('[data-nfilter]');
+ if(nf){newsFilter=nf.getAttribute('data-nfilter');app.innerHTML=newsHTML();return}
+ var sc=e.target.closest('[data-scroll]');
+ if(sc){var id=sc.getAttribute('data-scroll');var go=function(){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})};
+  if(parse().p!=='home'){location.hash='#home';setTimeout(go,60);e.preventDefault()}else{e.preventDefault();go()}
+ }
+});
+
+/* quiz */
+document.addEventListener('submit',function(e){
+ if(e.target.id==='quizForm'){
+  e.preventDefault();
+  var g=function(n){var c=document.querySelector('input[name="'+n+'"]:checked');return c?c.value:null};
+  var a=g('q1'),b=g('q2'),c=g('q3');var res=document.getElementById('quizResult');
+  if(!a||!b||!c){res.innerHTML='<div class="eyebrow">Kết quả</div><h3>Bạn còn câu chưa chọn</h3><p>Hãy trả lời đủ 3 câu rồi bấm lại.</p>';return}
+  var s={'dai-loan':0,'trung-quoc':0,'hong-kong':0,'macau':0};
+  var add=function(o){for(var k in o)s[k]+=o[k]};
+  if(a==='low')add({'trung-quoc':2,'dai-loan':1});if(a==='mid')add({'dai-loan':2,'macau':1,'trung-quoc':1});if(a==='high')add({'hong-kong':2,'macau':1});
+  if(b==='en')add({'hong-kong':2,'macau':1});if(b==='zh')add({'trung-quoc':2,'dai-loan':2});if(b==='both')add({'macau':2,'dai-loan':1});
+  if(c==='schol')add({'trung-quoc':2,'dai-loan':1});if(c==='job')add({'hong-kong':2,'macau':1});if(c==='fit')add({'dai-loan':2,'macau':1});if(c==='top')add({'hong-kong':2,'trung-quoc':1});
+  var rank=REG_ORDER.slice().sort(function(x,y){return s[y]-s[x]});
+  var t=rank[0],u=rank[1];
+  res.innerHTML='<div class="eyebrow">Gợi ý ban đầu</div><h3>Du học '+R[t].name+'</h3><p>'+R[t].lead+'</p><p style="margin-top:10px">Lựa chọn tiếp theo: <b>'+R[u].name+'</b>.</p><p style="margin-top:14px"><a class="btn gold" href="#'+t+'">Xem trang '+R[t].name+'</a> <a class="btn ghost" href="#dang-ky-'+t+'">Nhờ IEVN tư vấn</a></p>';
+ }
+ if(e.target.id==='leadForm'){
+  e.preventDefault();
+  document.getElementById('formMsg').innerHTML='<div class="ok">Đây là bản thử nên thông tin chưa được gửi đi. Khi triển khai thật, biểu mẫu sẽ kết nối với hệ thống nhận đăng ký của IEVN.</div>';
+ }
+});
+render();
+})();
+</script>
+
+</body></html>
